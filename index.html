@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="Shortcut Icon" href="https://cdn-icons-png.flaticon.com/128/4403/4403531.png">
+    <title>Quiz</title>
+</head>
+<body>
+    <div class="cel">
+        <div class="formas">
+            <div class="cilindro"></div>
+            <div class="circulo-menor"></div>
+        </div>
+        <div class="quiz-container">
+            <h1>Quiz de Perguntas e Respostas</h1>
+            <div id="pergunta"></div>
+            <div id="opcoes"></div>
+            <div id="resultado"></div>
+        </div>
+        <div class="circulo">
+            <div class="quadrado"></div>
+        </div>
+    </div>
+
+    <footer>
+        Desenvolvido por Matheus Guerra | 2024
+    </footer>
+   
+
+    <script>
+        const perguntas = [
+            {
+                pergunta: "Qual é o nome do primeiro computador eletrônico criado?",
+                opcoes:["ENIAC", "MAC", "IBM", "Windows"],
+                resposta: "ENIAC"
+            },
+            {
+                pergunta: "Quem é Ada Lovelace?",
+                opcoes:["Escritora","Política","Atriz","Programadora"],
+                resposta: "Programadora"
+            },
+            {
+                pergunta: "Qual dessas empresas não é do ramo da tecnologia?",
+                opcoes:["Dell","Intel","Umbro","Microsoft"],
+                resposta: "Umbro"
+            },
+            {
+                pergunta: "Qual dessas não é uma linguagem de programação?",
+                opcoes:["Python","JavaScript","HTML","Java"],
+                resposta: "HTML"
+            },
+            {
+                pergunta: "Quem foi o criador do sistema operacional Windows?",
+                opcoes:["Samsung","Apple","Linux","Microsoft"],
+                resposta: "Microsoft"
+            }
+        ];
+
+        const perguntaElemento = document.getElementById("pergunta");
+        const opcoesElemento = document.getElementById("opcoes");
+        const resultadoElemento = document.getElementById("resultado");
+
+        let indicePerguntaAtual = 0;
+
+        function carregarPergunta() {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            perguntaElemento.textContent = perguntaAtual.pergunta;
+    
+            opcoesElemento.innerHTML = "";
+            perguntaAtual.opcoes.forEach(opcao => {
+                const botao = document.createElement("button");
+                botao.textContent = opcao;
+                botao.addEventListener("click", () => verificarResposta(opcao));
+                opcoesElemento.appendChild(botao);
+            });
+        }
+
+        function verificarResposta(respostaSelecionada) {
+            const perguntaAtual = perguntas[indicePerguntaAtual];
+            if (respostaSelecionada === perguntaAtual.resposta){
+                resultadoElemento.textContent = "Resposta correta!";
+                resultadoElemento.className = "correto";
+            } else {
+                resultadoElemento.textContent = "Resposta incorreta. A resposta correta é: "+ perguntaAtual.resposta;
+                resultadoElemento.className = "incorreto";
+            }
+
+            //avança pra próxima ou acaba o quiz
+            indicePerguntaAtual++;
+            if (indicePerguntaAtual < perguntas.length) {
+                setTimeout(carregarPergunta, 2000); //carrega próxima pergunta após 2 segundos
+            } else {
+                setTimeout (resultadoElemento.textContent = "Quiz Concluído!", 2000);
+                resultadoElemento.className = "";
+            }
+        }
+
+        //carrega a primeira pergunta quando a página carrega
+        carregarPergunta();
+    </script>
+</body>
+</html>
